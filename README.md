@@ -1,93 +1,148 @@
-# acreetionos-flashing-utility
+# AcreetionOS USB Flashing Utility
 
+This is a desktop application built with Electron, designed to simplify the process of downloading AcreetionOS ISO images and flashing them directly to a USB drive. It provides a user-friendly interface and a transparent console output to monitor the flashing process.
 
+---
 
-## Getting started
+## Features
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+- **ISO Discovery**: Scrapes [acreetionos.org](https://acreetionos.org) to find available ISO download links.
+- **USB Device Detection**: Automatically lists connected USB drives.
+- **Cross-Platform Flashing**:
+  - **Linux/macOS**: Utilizes system-level `dd` command for secure and direct flashing.
+  - **Windows**: Automatically downloads the portable version of **Rufus** (a trusted third-party tool) and uses it to perform the flashing, handling Windows-specific disk access complexities.
+- **Progress Tracking**: Displays a clear progress bar for both download and flashing operations.
+- **In-App Console**: A dedicated console window within the application shows real-time output from the flashing process.
+- **User Guidance**: Provides a clear message upon successful flashing, guiding the user on how to boot from the USB drive.
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+---
 
-## Add your files
+## Why Rufus for Windows?
 
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/topics/git/add_files/#add-files-to-a-git-repository) or push an existing Git repository with the following command:
+On Windows, performing low-level disk write operations directly from an application is significantly more complex and carries higher risks due to the operating system's security model and how it manages disk access. Unlike Linux or macOS, there isn't a straightforward, built-in command-line tool like `dd` that can be reliably executed by an application without extensive administrative setup or specialized drivers.
 
-```
-cd existing_repo
-git remote add origin https://darrengames.ddns.net:2500/natalie/acreetionos-flashing-utility.git
-git branch -M main
-git push -uf origin main
-```
+To ensure the AcreetionOS USB Flashing Utility is both reliable and safe for Windows users, it integrates with **Rufus**.
 
-## Integrate with your tools
+Rufus is a widely recognized, open-source, and highly trusted utility specifically designed for creating bootable USB drives on Windows. By leveraging Rufus, this utility can:
 
-- [ ] [Set up project integrations](https://darrengames.ddns.net:2500/natalie/acreetionos-flashing-utility/-/settings/integrations)
+- **Handle Administrative Privileges**: Rufus will prompt the user for necessary administrator permissions, ensuring the flashing operation has the required access.
+- **Manage Disk Access Safely**: Rufus is expertly designed to interact with Windows' disk management APIs correctly, minimizing the risk of data corruption or system instability.
+- **Provide Robustness**: It accounts for various Windows-specific scenarios and potential issues during the flashing process.
 
-## Collaborate with your team
+This approach allows the AcreetionOS USB Flasher to provide a consistent and effective user experience across different operating systems, making it easier for users to switch to Linux.
 
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Set auto-merge](https://docs.gitlab.com/user/project/merge_requests/auto_merge/)
-
-## Test and Deploy
-
-Use the built-in continuous integration in GitLab.
-
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing (SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
-
-***
-
-# Editing this README
-
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thanks to [makeareadme.com](https://www.makeareadme.com/) for this template.
-
-## Suggestions for a good README
-
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
-
-## Name
-Choose a self-explaining name for your project.
-
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
-
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
-
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
+---
 
 ## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
+
+To get started with the AcreetionOS USB Flashing Utility, follow these steps:
+
+### Clone the repository:
+
+```bash
+git clone https://darrengames.ddns.net:2500/natalie/acreetionos-flashing-utility.git
+cd AcreetionOS-Flashing-Utility
+```
+
+### Install dependencies:
+
+Navigate to the project directory and install the required Node.js packages:
+
+```bash
+npm install
+```
+
+This will also ensure that native modules are correctly built for Electron.
+
+---
 
 ## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
 
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
+### Start the application:
 
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
+To run the application in development mode:
 
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
+```bash
+npm start
+```
 
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
+Or for verbose logging:
 
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
+```bash
+npm run dev
+```
 
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
+---
+
+### Select an ISO Image:
+
+- The application will automatically attempt to fetch available ISO images from [acreetionos.org](https://acreetionos.org).
+- Choose your desired AcreetionOS ISO from the **"Select ISO Image"** dropdown.
+- If the list doesn't appear or seems outdated, click the **"Refresh"** button.
+
+---
+
+### Select a USB Drive:
+
+- The application will list detected USB drives.
+
+⚠️ **WARNING**: Carefully select the correct USB drive from the **"Select USB Drive"** dropdown. **All data on the selected drive will be erased.**
+
+- If your drive isn't listed, click the **"Refresh"** button.
+
+---
+
+### Flash the ISO:
+
+- Once both an ISO and a USB drive are selected, the **"Flash ISO to USB"** button will become active.
+- Click the button. You will be prompted with a confirmation dialog.
+- Confirm to start the flashing process.
+
+#### On Windows:
+
+- Be prepared for a User Account Control (UAC) prompt from **Rufus**, which you must accept for the flashing to proceed.
+
+---
+
+### Monitor Progress:
+
+- A progress bar and status message will indicate the current stage (downloading, flashing) and percentage.
+- For detailed output, click the **"Toggle Console Output"** button to reveal a console-like interface that streams the raw output from the underlying flashing command (either `dd` or **Rufus**).
+
+---
+
+### Post-Flashing Instructions:
+
+Upon successful completion, a message will guide you on how to boot from the newly flashed USB drive to install AcreetionOS.
+
+---
+
+## Building for Distribution
+
+To create distributable packages:
+
+```bash
+npm run build
+```
+
+### OS-Specific Notes:
+
+- **Windows (.exe)**: Must be built on Windows.
+- **macOS (.dmg)**: Must be built on macOS.
+- **Linux (.AppImage)**: Must be built on Linux.
+
+Distributable files will be located in the `dist/` directory.
+
+---
+
+## Credits
+
+Made with ❤️ by **Natalie** from the **AcreetionOS Team**.
+
+Special thanks to **Darren Clift** for being a truly great partner on this project – your contributions are deeply appreciated!
+
+---
 
 ## License
-For open source projects, say how it is licensed.
 
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+This project is licensed under the **MIT License**. See the `LICENSE` file for details.
